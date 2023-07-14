@@ -23,6 +23,7 @@ struct relay_metadata
     std::uint16_t *delay_time;
 };
 
+//TODO: Figure out a mechanism to ensure no race condition
 memory::Layout rtrc_registers;
 
 void i2c_setup(void);
@@ -175,6 +176,7 @@ void main_controller_callback(void *)
 
     while (1)
     {
+        // TODO: Make this more robust, maybe a way to trigger tasks sequentially?
         if (rtrc_registers.registers.status > 0)
         {
             for (auto &task : relay_tasks)
